@@ -28,3 +28,13 @@ a {
 a:hover {
   color: #b30000;
 }
+
+video {
+position: fixed; 
+top: 00;
+left: 00;
+width: 100vw;
+z-index: -0;
+
+
+}
