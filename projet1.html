@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NovaTech — Architecture réseau — Mon Portfolio</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Styles propres à la page projet (le style global met les <p> en noir) */
+    .back-link { display: inline-block; margin: 1.5rem 0 0 2rem; }
+    .project-detail { max-width: 900px; margin: 0 auto; padding: 0 20px 60px; }
+    .project-detail h1 { padding-bottom: .5rem; }
+    .project-detail h2 { color: #b30000; margin: 2.2rem 0 .8rem; text-shadow: 0 0 6px #b30000; }
+    .project-detail p { color: #d0d0d0; text-align: left; padding: .4rem 0; text-shadow: none; line-height: 1.35; }
+    .project-detail .project-meta { text-align: center; color: #8a8a8a; padding-top: 0; }
+    .project-hero { width: 100%; height: auto; display: block; border: 1px solid #3a0000; border-radius: 4px; margin: 1.5rem 0 .3rem; background: #fff; }
+    .caption { text-align: center !important; font-size: 1.1rem; color: #8a8a8a !important; }
+    .project-detail ul { list-style: none; padding: 0; }
+    .project-detail li { padding: .35rem 0 .35rem 1.4rem; position: relative; line-height: 1.3; }
+    .project-detail li::before { content: "⛧"; color: #b30000; position: absolute; left: 0; }
+    .project-detail strong { color: #fff; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: .6rem; }
+    .tags span { border: 1px solid #720081; color: #d0d0d0; padding: 2px 12px; border-radius: 2px; font-size: 1.15rem; }
+    .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 1.5rem 0; }
+    .facts div { border: 1px solid #3a0000; padding: 12px 14px; background: #110000; }
+    .facts b { display: block; color: #b30000; font-weight: normal; font-size: 1.05rem; letter-spacing: .06em; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="back-link">← Retour au portfolio</a>
+
+  <main class="project-detail">
+    <h1>NovaTech — Architecture réseau</h1>
+    <p class="project-meta">Réseau &amp; infrastructure — Projet académique ESGI — 2026</p>
+
+    <img src="img/novatech-schema.png" alt="Schéma de la topologie physique NovaTech : siège de Paris sur deux étages et agence de Lyon" class="project-hero">
+    <p class="caption">Topologie physique : siège de Paris (2 étages) et agence de Lyon, reliés par un VPN IPsec.</p>
+
+    <div class="facts">
+      <div><b>Contexte</b>Projet fil rouge, Architecture des réseaux (Bachelor 1)</div>
+      <div><b>Cas</b>Entreprise fictive NovaTech, 2 sites</div>
+      <div><b>Dimensionnement</b>80 utilisateurs aujourd'hui, 104 prévus à 3 ans</div>
+      <div><b>Livrable</b>Dossier « Besoin et topologie physique » + schéma légendé</div>
+    </div>
+
+    <section class="project-description">
+      <h2>Description</h2>
+      <p>À partir d'un appel d'offre fictif, j'ai conçu l'architecture réseau de NovaTech : un siège à Paris réparti sur deux étages et une agence à Lyon. Le travail va de l'analyse du besoin jusqu'au choix des équipements et des câbles, avec le nombre de ports justifié pour chaque switch.</p>
+      <p>Les capacités ont été calculées avec une marge de croissance de 30 % : 80 utilisateurs deviennent 104 (78 à Paris, 26 à Lyon).</p>
+
+      <h2>Ce que j'ai fait</h2>
+      <ul>
+        <li><strong>Besoin et hypothèses :</strong> analyse du cahier des charges, contraintes, hypothèses de dimensionnement.</li>
+        <li><strong>Topologie physique :</strong> deux cœurs de réseau de niveau 3 redondants à Paris, switches d'accès 48 ports Gigabit + 2 ports SFP+, câbles DAC 10G dans la baie.</li>
+        <li><strong>Supports :</strong> Cat 6 pour les liaisons de moins de 90 m, fibre OM4 vers l'étage 2 au-delà des 100 m.</li>
+        <li><strong>Liaison inter-sites :</strong> VPN IPsec via Internet, tunnel en /30.</li>
+        <li><strong>Segmentation :</strong> plan de VLAN et d'adressage par site, DHCP relay (cœurs à Paris, routeur à Lyon).</li>
+        <li><strong>Sécurité :</strong> ACL en refus par défaut, réseau invité isolé, préparation au double pile IPv4/IPv6.</li>
+        <li><strong>Documentation :</strong> schéma physique légendé et dossier relu pour supprimer les incohérences (ports, VLAN, effectifs).</li>
+      </ul>
+
+      <h2>Un problème rencontré</h2>
+      <p>Le câble Cat 6 est limité à 100 m, et l'étage 2 dépasse cette distance depuis la baie principale. J'ai gardé 90 m comme limite de conception et choisi une liaison fibre OM4, avec un port SFP+ plutôt qu'un port Gigabit sur le switch concerné.</p>
+
+      <h2>Outils</h2>
+      <div class="tags">
+        <span>Architecture réseau</span><span>VLAN</span><span>VPN IPsec</span><span>ACL</span><span>DHCP relay</span><span>IPv6</span><span>Schéma réseau</span>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -26,7 +26,7 @@ h1 {
 }
 
 a {
-  color: #d0d0d0;
+  color: #720081;
   text-decoration: none;
 }
 
@@ -40,6 +40,127 @@ top: 00;
 left: 00;
 width: 100vw;
 z-index: -1;
+}
 
+p  {
+  color: #000000;
+  text-align: center;
+  padding: 2rem 0;
+  text-shadow: 0 0 8px #ad0101;
+}
 
+.glitch-link {
+  position: relative;
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.glitch-link::before,
+.glitch-link::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.glitch-link:hover::before,
+.glitch-link:hover::after {
+  opacity: 1;
+}
+
+.glitch-link:hover::before {
+  color: #c20202;
+  animation: glitch-top 0.4s infinite linear alternate-reverse;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.glitch-link:hover::after {
+  color: #000000;
+  animation: glitch-bottom 0.15s infinite linear alternate-reverse;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+
+@keyframes glitch-top {
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(-6px, -3px); }
+  40%  { transform: translate(2px, 1px); }
+  60%  { transform: translate(-3px, 4px); }
+  80%  { transform: translate(1px, -1px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes glitch-bottom {
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(2px, 1px); }
+  40%  { transform: translate(-6px, -3px); }
+  60%  { transform: translate(1px, -1px); }
+  80%  { transform: translate(-7px, 5px); }
+  100% { transform: translate(0, 0); }
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 40px 20px;
+}
+
+.portfolio-item {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.portfolio-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.portfolio-item:hover img {
+  transform: scale(1.08);
+}
+
+.portfolio-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.portfolio-item:hover .portfolio-overlay {
+  opacity: 1;
+}
+
+.portfolio-overlay h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.portfolio-overlay p {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+{
+border-collapse: collapse; /* Les bordures du tableau seront
+collées (plus joli) */
+}
+td
+{
+border: 1px solid black;
 }
