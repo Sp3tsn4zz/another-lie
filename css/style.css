@@ -1,5 +1,111 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
+/* EN-TÊTE : collé en haut, menu sur une ligne */
+header {
+  position: sticky;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 1rem;
+  text-align: center;
+}
+
+nav a {
+  margin: 0 1rem;
+  font-size: 1.6rem;
+}
+
+/* SECTIONS : centrées, espacées, fond sombre pour la lisibilité */
+section {
+  max-width: 800px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid #b30000;
+  text-align: center;
+}
+
+h2 {
+  color: #b30000;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  color: #b30000;
+  margin-bottom: 1rem;
+}
+
+/* TABLEAU DES BEATS */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 0.5rem;
+  border-bottom: 1px solid #b30000;
+}
+
+/* LIENS : un par ligne */
+#liens a {
+  display: block;
+  margin: 0.5rem 0;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem;
+}
+
+/* LIENS DU MENU */
+nav a {
+  position: relative;
+  display: inline-block;
+  margin: 0 2rem;
+  font-size: 1.6rem;
+}
+
+/* Les deux pentacles, cachés par défaut */
+nav a::before,
+nav a::after {
+  content: "⛧";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #b30000;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+nav a::before { left: -1.5rem; }
+nav a::after  { right: -1.5rem; }
+
+/* Au survol : glitch sur le texte */
+nav a:hover {
+  color: #b30000;
+  animation: glitch 0.3s infinite;
+}
+
+/* Au survol : les pentacles apparaissent et tremblent */
+nav a:hover::before,
+nav a:hover::after {
+  opacity: 1;
+  animation: glitch-pentacle 0.4s infinite;
+}
+
+@keyframes glitch {
+  0%   { text-shadow:  2px  0   #b30000, -2px  0   #000303; transform: translate(0, 0); }
+  25%  { text-shadow: -2px -1px #b30000,  2px  1px #000000; transform: translate(-1px, 1px); }
+  50%  { text-shadow:  1px  2px #b30000, -1px -2px #000505; transform: translate(1px, -1px); }
+  75%  { text-shadow: -1px  0   #b30000,  1px  0   #000202; transform: translate(-1px, 0); }
+  100% { text-shadow:  2px  0   #b30000, -2px  0   #000505; transform: translate(0, 0); }
+}
+
+@keyframes glitch-pentacle {
+  0%, 100% { transform: translateY(-50%) rotate(0deg) scale(1); }
+  33%      { transform: translateY(-50%) rotate(-10deg) scale(1.2); }
+  66%      { transform: translateY(-50%) rotate(8deg) scale(0.9); }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -26,7 +132,7 @@ h1 {
 }
 
 a {
-  color: #720081;
+  color: #b40c0c;
   text-decoration: none;
 }
 
@@ -156,7 +262,7 @@ p  {
   opacity: 0.8;
 }
 
-{
+table {
 border-collapse: collapse; /* Les bordures du tableau seront
 collées (plus joli) */
 }
