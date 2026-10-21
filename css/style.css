@@ -2,9 +2,7 @@
 
 /* EN-TÊTE : collé en haut, menu sur une ligne */
 header {
-  position: sticky;
-  top: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.95);
   padding: 1rem;
   text-align: center;
 }
@@ -262,11 +260,181 @@ p  {
   opacity: 0.8;
 }
 
-table {
-border-collapse: collapse; /* Les bordures du tableau seront
-collées (plus joli) */
+/* ÉCRAN D'ACCÈS : couvre tout le site */
+#porte {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
-td
-{
-border: 1px solid black;
+
+#porte input,
+#porte button {
+  font-family: inherit;
+  font-size: 1.4rem;
+  padding: 0.5rem 1rem;
+  margin: 0.3rem;
+  background-color: #000;
+  color: #d0d0d0;
+  border: 1px solid #b30000;
+}
+
+#porte button:hover {
+  background-color: #b30000;
+  color: #000;
+  cursor: pointer;
+}
+
+#erreur {
+  color: #b30000;
+}
+
+/* Classe générique pour cacher un élément */
+.cache {
+  display: none !important;
+}
+
+/* Lignes de balayage façon vieil écran */
+#porte::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.35) 3px
+  );
+}
+
+#boot,
+#login {
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+}
+
+/* Sigil qui pulse */
+#boot-logo {
+  font-size: 7rem;
+  color: #b30000;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1;   text-shadow: 0 0 25px #b30000; }
+  50%      { opacity: 0.4; text-shadow: 0 0 5px #b30000; }
+}
+
+/* Lignes de litanie */
+#boot-texte p {
+  color: #5dccee;
+  text-align: left;
+  padding: 0.2rem 0;
+  text-shadow: inherit;
+}
+
+/* Barre de chargement */
+.barre {
+  width: 100%;
+  height: 1.2rem;
+  margin-top: 1rem;
+  border: 1px solid #b30000;
+}
+
+#barre-remplie {
+  width: 0%;
+  height: 100%;
+  background-color: #b30000;
+  box-shadow: 0 0 10px #b30000;
+  transition: width 0.1s linear;
+}
+
+#boot-pourcent,
+#erreur {
+  color: #b30000;
+  padding: 0.5rem 0;
+}
+
+/* COULEURS DES STATUTS */
+.rouge  { color: #ff1a1a; text-shadow: 0 0 6px #ff1a1a; }
+.jaune  { color: #ffd000; text-shadow: 0 0 6px #ffd000; }
+.orange { color: #ff7b00; text-shadow: 0 0 6px #ff7b00; }
+
+#boot-texte p.alerte {
+  color: #ff1a1a;
+  animation: clignote 0.5s steps(2) infinite;
+}
+
+@keyframes clignote {
+  50% { opacity: 0; }
+}
+
+/* VHS : léger scintillement de tout l'écran */
+#porte {
+  animation: scintille 0.15s infinite;
+}
+
+@keyframes scintille {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.95; }
+}
+
+/* VHS : dédoublement rouge/cyan + secousses de temps en temps */
+#boot,
+#login {
+  animation: vhs-tremble 3s infinite;
+}
+
+@keyframes vhs-tremble {
+  0%, 90%, 100% {
+    transform: translate(0, 0);
+    text-shadow: 1px 0 rgba(255, 0, 0, 0.6), -1px 0 rgba(0, 0, 0, 0.4);
+  }
+  92% {
+    transform: translate(-5px, 1px) skewX(-5deg);
+    text-shadow: 4px 0 rgba(255, 0, 0, 0.8), -4px 0 rgba(0, 0, 0, 0.6);
+  }
+  94% {
+    transform: translate(4px, -1px) skewX(4deg);
+  }
+  96% {
+    transform: translate(0, 0);
+  }
+}
+
+/* VHS : bande de bruit qui descend */
+#porte::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 8%;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.08), transparent);
+  pointer-events: none;
+  animation: bande 4s linear infinite;
+}
+
+@keyframes bande {
+  from { top: -10%; }
+  to   { top: 110%; }
+}
+
+/* Gros glitch avant le formulaire */
+#porte.glitch-fort {
+  animation: glitch-fort 0.4s steps(4);
+}
+
+@keyframes glitch-fort {
+  0%   { transform: none; }
+  25%  { transform: translate(-12px, 3px) skewX(12deg); filter: hue-rotate(90deg); }
+  50%  { transform: translate(10px, -3px); filter: invert(1); }
+  75%  { transform: translate(-5px, 0) skewX(-6deg); filter: none; }
+  100% { transform: none; }
 }

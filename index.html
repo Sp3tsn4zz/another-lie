@@ -1,34 +1,63 @@
 <!DOCTYPE html>
-<html>
-        <head>
-             <link rel="stylesheet" href="css/style.css">
-             <meta charset="utf-8"/>
-             <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>another-lie</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
-          <title>another-lie</title>
-        
-        </head>
+  <div id="porte">
 
-        <body>
+    <!-- DÉMARRAGE -->
+    <div id="boot">
+      <div class="logo-glitch">
+        <img src="img/logo.png" alt="" class="logo-calque">
+        <img src="img/logo.png" alt="" class="logo-calque logo-rouge">
+        <img src="img/logo.png" alt="" class="logo-calque logo-cyan">
+      </div>
+      <div id="boot-texte"></div>
+      <div class="barre">
+        <div id="barre-remplie"></div>
+      </div>
+      <p id="boot-pourcent">0 %</p>
+    </div>
 
-      <!-- EN-TÊTE : nom + menu -->
-      <header>
-        <h1>Worldomination !</h1>
-        <nav>
-          <a href="#accueil">Accueil</a>
-          <a href="#beats">Beats</a>
-          <a href="#liens">Liens</a>
-          <a href="#contact">Contact</a>
-        </nav>
-      </header>
+    <!-- IDENTIFICATION (cachée au début) -->
+    <div id="login" class="cache">
+      <h2>⛧ Enter soul frequency ⛧</h2>
+      <form id="form-acces">
+        <input type="text" id="identifiant" placeholder="Identifiant" autocomplete="off">
+        <input type="password" id="code" placeholder="Code">
+        <button type="submit">Entrer</button>
+      </form>
+      <p id="erreur"></p>
+    </div>
 
-      <!-- ACCUEIL -->
-      <section id="accueil">
-        <h3>Welcome to <strong>⛧ Crying Abyss Club ⛧</strong></h3>
-      </section>
-      <br>
-      <!-- BEATS -->
-      <section id="beats">
+  </div>
+
+  <video src="video/lbs.mp4" autoplay loop muted playsinline></video>
+
+  <!-- EN-TÊTE : nom + menu -->
+  <header>
+    <h1>Worldomination !</h1>
+    <nav>
+      <a href="#accueil">Accueil</a>
+      <a href="#beats">Beats</a>
+      <a href="#liens">Liens</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- ACCUEIL -->
+  <section id="accueil">
+    <h3>Welcome to <strong>⛧ Crying Abyss Club ⛧</strong></h3>
+    <a href="https://www.youtube.com/@vvh0sn3xt/videos" class="glitch-link" data-text="Read Necronomicon">Read Necronomicon</a>
+  </section>
+
+  <!-- BEATS -->
+  <section id="beats">
     <h2>Beats</h2>
     <table>
       <tr>
@@ -47,9 +76,23 @@
         <td>70 €</td>
       </tr>
     </table>
-  </section>   
-  <br>
-        <!-- LIENS -->
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="portfolio">
+    <h2>Portfolio</h2>
+    <div class="portfolio-grid">
+      <a href="portfolio.html" class="portfolio-item">
+        <img src="projet1.jpg" alt="Projet 1">
+        <div class="portfolio-overlay">
+          <h3>Nom du projet</h3>
+          <p>Catégorie / année</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- LIENS -->
   <section id="liens">
     <h2>Liens</h2>
     <a href="https://soundcloud.com/user-00077777">SoundCloud</a>
@@ -57,54 +100,22 @@
     <a href="https://instagram.com/vvh0sn3xt">Instagram</a>
     <a href="https://open.spotify.com/artist/5HMHJGocej7pM4iVz7i1HG">Spotify</a>
   </section>
-  <br>
-        <!-- CONTACT -->
+
+  <!-- CONTACT -->
   <section id="contact">
     <h2>Contact</h2>
     <p>vvh0sn3xt@gmail.com</p>
   </section>
 
   <footer>
- 
+    <p>⛧ prod ⛧ vvh0sn3xt ⛧</p>
   </footer>
 
-            <script src="js/script.js"></script>
+  <iframe src="logo-3d-vvh0sn3xt.html"
+    style="position:fixed; bottom:0px; right:-30px; width:280px; aspect-ratio:1048/620; border:none; pointer-events:none; z-index:50;"
+    title="Logo 3D vvh0sn3xt">
+  </iframe>
 
-            <video src="video/lbs.mp4" autoplay loop muted playsinline></video>
-
-            <a href="https://www.youtube.com/@vvh0sn3xt/videos" class="glitch-link" data-text="Read Necronomicon">Read Necronomicon</a>
-            <iframe src="logo-3d-vvh0sn3xt.html"
-        style="position:fixed; bottom:20px; right:20px; width:280px; aspect-ratio:1048/620; border:none; pointer-events:none; z-index:50;"
-        title="Logo 3D vvh0sn3xt">
-            </iframe>
-
-<section class="portfolio">
-  <h2>Portfolio</h2>
-  <div class="portfolio-grid">
-    <a href="portfolio.html" class="portfolio-item">
-      <img src="projet1.jpg" alt="Projet 1">
-      <div class="portfolio-overlay">
-        <h3>Nom du projet</h3>
-        <p>Catégorie / année</p>
-    </div>
-   </a>
- </div>
-</section>
-
-
-
-<form method="post" action="traitement.php">
-    <p>
-      <label>Votre pseudo</label> 
-      <input type"text" name="pseudo" id="pseudo"/>
-      
-      <br />
-      <label for="pass">Votre mot de passe :</label>
-      <input type="password" name="pass" id="pass" />
-      <label>Votre E-mail</label> 
-      <input type"text" name="E-mail" id="E-mail"/>
-  </p>
-
-</form>
-        </body>
+  <script src="js/script.js"></script>
+</body>
 </html>
