@@ -47,6 +47,12 @@ for (const l of lignes) {
 let ligne = 0;
 let tapes = 0;
 
+const glyphes = "!<>-_\\/[]{}=+*^?#░▒▓█⛧01";
+
+function lettreAleatoire() {
+  return glyphes[Math.floor(Math.random() * glyphes.length)];
+}
+
 function demarrage() {
   // Toutes les lignes sont écrites : gros glitch puis formulaire
   if (ligne >= lignes.length) {
@@ -68,19 +74,27 @@ function demarrage() {
   }
   bootTexte.appendChild(p);
 
-  let lettre = 0;
+  let revele = 0;
 
-  function taper() {
-    if (lettre < donnees.texte.length) {
-      p.textContent += donnees.texte[lettre];
-      lettre++;
+  function decoder() {
+    // Lettres déjà décodées + quelques caractères aléatoires devant
+    let affichage = "";
+    for (let i = 0; i < donnees.texte.length; i++) {
+      if (i < revele) {
+        affichage += donnees.texte[i];
+      } else if (i < revele + 8) {
+        affichage += lettreAleatoire();
+      }
+    }
+    p.textContent = affichage;
+
+    if (revele < donnees.texte.length) {
+      revele++;
       tapes++;
-
       const progression = Math.round((tapes / totalCaracteres) * 100);
       barre.style.width = progression + "%";
       pourcent.textContent = progression + " %";
-
-      setTimeout(taper, 20);
+      setTimeout(decoder, 11);
     } else {
       // Ligne finie : on ajoute le statut en couleur
       if (donnees.statut) {
@@ -90,12 +104,13 @@ function demarrage() {
         p.appendChild(span);
       }
       ligne++;
-      setTimeout(demarrage, 350);
+      setTimeout(demarrage, 180);
     }
   }
 
-  taper();
+  decoder();
 }
+
 if (sessionStorage.getItem("acces") === "ok") {
   porte.classList.add("cache");
 } else {
@@ -116,3 +131,33 @@ formAcces.addEventListener("submit", function (e) {
   }
 });
 
+// ===== GLITCH ALÉATOIRE =====
+const couleursGlitch = ["#ff0000", "#000000", "#ffffff", "#000000"];
+
+function glitchAleatoire() {
+  if (porte.classList.contains("cache")) return;
+
+  // 1 à 4 blocs de couleur à des endroits au hasard
+  const nombre = 1 + Math.floor(Math.random() * 4);
+  for (let n = 0; n < nombre; n++) {
+    const bloc = document.createElement("div");
+    bloc.className = "bloc-glitch";
+    bloc.style.left = Math.random() * 100 + "%";
+    bloc.style.top = Math.random() * 100 + "%";
+    bloc.style.width = 5 + Math.random() * 40 + "%";
+    bloc.style.height = 0.5 + Math.random() * 4 + "%";
+    bloc.style.backgroundColor = couleursGlitch[Math.floor(Math.random() * couleursGlitch.length)];
+    porte.appendChild(bloc);
+    setTimeout(function () { bloc.remove(); }, 50 + Math.random() * 150);
+  }
+
+  // Une fois sur trois environ : l'écran se découpe et saute
+  if (Math.random() < 0.35) {
+    const cible = boot.classList.contains("cache") ? login : boot;
+    cible.classList.add("saut");
+    setTimeout(function () { cible.classList.remove("saut"); }, 200);
+  }
+
+  setTimeout(glitchAleatoire, 100 + Math.random() * 900);
+}
+glitchAleatoire();
