@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galerie · another-lie</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/galerie.css">
+</head>
+<body>
+
+  <video src="video/lbs.mp4" autoplay loop muted playsinline></video>
+
+  <!-- EN-TÊTE : nom + menu (le même sur toutes les pages) -->
+  <header>
+    <div class="club">⛧ Crying Abyss Club ⛧</div>
+    <h1>Worldomination !</h1>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="musique.html">Musique</a>
+      <a href="galerie.html">Galerie</a>
+      <a href="videos.html">Vidéos</a>
+      <a href="modeles-3d.html">3D</a>
+      <a href="lore.html">Lore</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- GALERIE : covers, logos, artworks (contenu dans data/creations.js) -->
+    <section id="galerie">
+      <h2>Galerie</h2>
+      <div class="filtres">
+        <button class="filtre actif" data-filtre="tout">Tout</button>
+        <button class="filtre" data-filtre="cover">Covers</button>
+        <button class="filtre" data-filtre="logo">Logos</button>
+        <button class="filtre" data-filtre="artwork">Artworks</button>
+      </div>
+      <div id="galerie-grille"></div>
+    </section>
+  </main>
+
+  <iframe src="logo-3d-vvh0sn3xt.html"
+    style="position:fixed; bottom:0px; right:-30px; width:280px; aspect-ratio:1048/620; border:none; pointer-events:none; z-index:50;"
+    title="Logo 3D vvh0sn3xt">
+  </iframe>
+
+  <!-- VISIONNEUSE PLEIN ÉCRAN (cachée au début) -->
+  <div id="visionneuse" class="cache">
+    <button id="visionneuse-fermer" class="visionneuse-bouton" aria-label="Fermer">×</button>
+    <button id="visionneuse-precedent" class="visionneuse-bouton" aria-label="Précédent">‹</button>
+    <figure>
+      <img id="visionneuse-image" src="" alt="">
+      <figcaption>
+        <h3 id="visionneuse-titre"></h3>
+        <p id="visionneuse-info"></p>
+        <p id="visionneuse-texte"></p>
+      </figcaption>
+    </figure>
+    <button id="visionneuse-suivant" class="visionneuse-bouton" aria-label="Suivant">›</button>
+  </div>
+
+  <script src="js/script.js"></script>
+  <script src="data/creations.js"></script>
+  <script src="js/galerie.js"></script>
+</body>
+</html>

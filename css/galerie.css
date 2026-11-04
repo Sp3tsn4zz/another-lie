@@ -1,0 +1,316 @@
+/* ===== PAGE GALERIE ===== */
+
+/* ===== GALERIE ===== */
+#galerie {
+  max-width: 1100px;
+}
+
+.filtres {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.filtre {
+  font-family: inherit;
+  font-size: 1.3rem;
+  padding: 0.3rem 1rem;
+  background-color: #000;
+  color: #d0d0d0;
+  border: 1px solid #3a0000;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.filtre:hover,
+.filtre.actif {
+  border-color: #b30000;
+  color: #b30000;
+  text-shadow: 0 0 6px #b30000;
+}
+
+#galerie-grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1.2rem;
+}
+
+/* --- Carte --- */
+.carte {
+  font-family: inherit;
+  color: inherit;
+  text-align: left;
+  padding: 0;
+  background-color: #0b0000;
+  border: 1px solid #3a0000;
+  cursor: pointer;
+  transition: transform 0.15s ease-out, border-color 0.2s, box-shadow 0.2s;
+  animation: carte-entree 0.6s steps(6) backwards;
+}
+
+.carte:hover,
+.carte:focus-visible {
+  border-color: #b30000;
+  box-shadow: 0 0 18px rgba(179, 0, 0, 0.5);
+  outline: none;
+}
+
+@keyframes carte-entree {
+  0%   { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateX(-10px); }
+  40%  { opacity: 1; clip-path: inset(30% 0 40% 0); transform: translateX(8px); }
+  70%  { clip-path: inset(0 0 20% 0); transform: translateX(-4px); }
+  100% { opacity: 1; clip-path: none; transform: none; }
+}
+
+.carte-cadre {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.carte-cadre img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease, filter 0.3s;
+  filter: grayscale(0.4) contrast(1.1);
+}
+
+.carte:hover .carte-cadre img {
+  transform: scale(1.06);
+  filter: none;
+}
+
+/* Calques rouge et cyan : cachés, ils se décalent au survol */
+.carte-cadre .calque-rouge,
+.carte-cadre .calque-cyan {
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+
+.carte-cadre .calque-rouge { filter: sepia(1) saturate(8) hue-rotate(-50deg); }
+.carte-cadre .calque-cyan  { filter: sepia(1) saturate(8) hue-rotate(140deg); }
+
+.carte:hover .calque-rouge {
+  opacity: 0.7;
+  animation: tranche-1 1.2s steps(1) infinite;
+}
+
+.carte:hover .calque-cyan {
+  opacity: 0.6;
+  animation: tranche-2 0.9s steps(1) infinite;
+}
+
+/* Lignes de balayage sur l'image */
+.carte-cadre::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.3) 3px
+  );
+}
+
+/* Image introuvable */
+.signal-perdu {
+  display: none;
+}
+
+.carte.perdu img {
+  display: none;
+}
+
+.carte.perdu .signal-perdu {
+  display: flex;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.5rem;
+  color: #b30000;
+  font-size: clamp(1.1rem, 4vw, 1.6rem);
+  letter-spacing: 0.2rem;
+  text-shadow: 3px 0 rgba(255, 0, 0, 0.8), -3px 0 rgba(16, 177, 218, 0.6);
+  background:
+    repeating-linear-gradient(0deg, #111 0px, #000 2px, #1a0000 4px),
+    #000;
+  animation: neige 0.25s steps(3) infinite;
+}
+
+@keyframes neige {
+  0%   { background-position: 0 0; }
+  50%  { background-position: 0 7px; }
+  100% { background-position: 0 -5px; }
+}
+
+.carte-infos {
+  padding: 0.6rem 0.8rem;
+}
+
+.carte-infos h3 {
+  color: #fff;
+  margin: 0;
+  font-weight: normal;
+  font-size: 1.5rem;
+}
+
+.carte-infos p {
+  color: #8a8a8a;
+  text-align: left;
+  padding: 0;
+  text-shadow: none;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  letter-spacing: 0.05rem;
+}
+
+/* ===== VISIONNEUSE PLEIN ÉCRAN ===== */
+#visionneuse {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background-color: rgba(5, 5, 5, 0.96);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 4rem;
+  gap: 0.8rem;
+}
+
+#visionneuse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.35) 3px
+  );
+}
+
+#visionneuse.glitch-entree figure {
+  animation: glitch-fort 0.4s steps(4);
+}
+
+#visionneuse figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#visionneuse-image {
+  max-width: 100%;
+  max-height: 70vh;
+  min-height: min(50vh, 420px);
+  object-fit: contain;
+  background-color: #000;
+  border: 1px solid #b30000;
+  box-shadow: 0 0 30px rgba(179, 0, 0, 0.4);
+}
+
+#visionneuse figcaption {
+  text-align: center;
+  margin-top: 0.8rem;
+}
+
+#visionneuse-titre {
+  color: #b30000;
+  text-shadow: 0 0 8px #b30000;
+  margin: 0;
+}
+
+#visionneuse figcaption p {
+  color: #d0d0d0;
+  text-shadow: none;
+  padding: 0.2rem 0;
+}
+
+#visionneuse-info {
+  color: #8a8a8a !important;
+  text-transform: uppercase;
+}
+
+.visionneuse-bouton {
+  position: absolute;
+  z-index: 2;
+  font-family: inherit;
+  font-size: 2rem;
+  background-color: #000;
+  color: #d0d0d0;
+  border: 1px solid #b30000;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+}
+
+.visionneuse-bouton:hover {
+  background-color: #b30000;
+  color: #000;
+}
+
+#visionneuse-fermer    { top: 1rem; right: 1rem; }
+#visionneuse-precedent { left: 1rem; top: 50%; transform: translateY(-50%); }
+#visionneuse-suivant   { right: 1rem; top: 50%; transform: translateY(-50%); }
+
+/* ===== MOBILE ===== */
+@media (max-width: 600px) {
+  #galerie-grille {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.7rem;
+  }
+
+  .carte-infos h3 {
+    font-size: 1.2rem;
+  }
+
+  #visionneuse {
+    padding: 4rem 1rem;
+  }
+
+  #visionneuse-precedent,
+  #visionneuse-suivant {
+    top: auto;
+    bottom: 1rem;
+    transform: none;
+  }
+}
+
+/* Moins d'animations pour ceux qui le demandent */
+@media (prefers-reduced-motion: reduce) {
+  .carte,
+  .carte:hover .calque-rouge,
+  .carte:hover .calque-cyan,
+  #visionneuse.glitch-entree figure {
+    animation: none;
+  }
+}
+
+/* Nom caché par des symboles : rouge, avec un léger dédoublement */
+.carte-infos h3.nom-cache {
+  color: #b30000;
+  text-shadow: 2px 0 rgba(255, 0, 0, 0.6), -2px 0 rgba(16, 177, 218, 0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  transition: color 0.4s, text-shadow 0.4s;
+}
+
+/* Nom entièrement révélé : il passe en blanc en douceur */
+.carte-infos h3.nom-cache.nom-revele {
+  color: #fff;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+}

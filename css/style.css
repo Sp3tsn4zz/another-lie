@@ -428,7 +428,7 @@ p  {
 /* ===== GLITCH DE L'ÉCRAN ===== */
 #boot,
 #login {
-  text-shadow: 3px 0 rgba(255, 0, 0, 0.8), -3px 0 rgba(0, 255, 255, 0.6);
+  text-shadow: 3px 0 rgba(255, 0, 0, 0.8), -3px 0 rgba(16, 177, 218, 0.6);
 }
 
 #boot.saut,
