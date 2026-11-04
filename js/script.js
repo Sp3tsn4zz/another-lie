@@ -14,8 +14,14 @@ function ecrire() {
 
 ecrire();
 
-const IDENTIFIANT = "vvh0sn3xt";
-const CODE = "666";
+// L'écran d'accès n'existe que sur l'accueil.
+// Sur les autres pages, sans accès, on renvoie vers l'accueil.
+if (!document.getElementById("porte") && sessionStorage.getItem("acces") !== "ok") {
+  window.location.href = "index.html";
+}
+
+const IDENTIFIANT = "newid";
+const CODE = "123";
 
 const porte = document.getElementById("porte");
 const boot = document.getElementById("boot");
@@ -111,13 +117,15 @@ function demarrage() {
   decoder();
 }
 
-if (sessionStorage.getItem("acces") === "ok") {
-  porte.classList.add("cache");
-} else {
-  demarrage();
+if (porte) {
+  if (sessionStorage.getItem("acces") === "ok") {
+    porte.classList.add("cache");
+  } else {
+    demarrage();
+  }
 }
 
-formAcces.addEventListener("submit", function (e) {
+if (formAcces) formAcces.addEventListener("submit", function (e) {
   e.preventDefault();
 
   const id = document.getElementById("identifiant").value;
@@ -135,7 +143,7 @@ formAcces.addEventListener("submit", function (e) {
 const couleursGlitch = ["#ff0000", "#000000", "#ffffff", "#000000"];
 
 function glitchAleatoire() {
-  if (porte.classList.contains("cache")) return;
+  if (!porte || porte.classList.contains("cache")) return;
 
   // 1 à 4 blocs de couleur à des endroits au hasard
   const nombre = 1 + Math.floor(Math.random() * 4);
@@ -161,3 +169,50 @@ function glitchAleatoire() {
   setTimeout(glitchAleatoire, 100 + Math.random() * 900);
 }
 glitchAleatoire();
+
+// ===== MENU : lien de la page actuelle en surbrillance =====
+const pageActuelle = window.location.pathname.split("/").pop() || "index.html";
+for (const lien of document.querySelectorAll("nav a")) {
+  if (lien.getAttribute("href") === pageActuelle) {
+    lien.classList.add("actif");
+  }
+}
+
+// ===== TRANSITION GLITCH ENTRE LES PAGES =====
+// On arrive sur la page : petit glitch d'entrée
+document.body.classList.add("page-entree");
+
+for (const lien of document.querySelectorAll("nav a, a.portail")) {
+  lien.addEventListener("click", function (e) {
+    const destination = lien.getAttribute("href");
+    if (destination === pageActuelle) {
+      e.preventDefault();
+      return;
+    }
+    e.preventDefault();
+    document.body.classList.add("page-sortie");
+    setTimeout(function () {
+      window.location.href = destination;
+    }, 350);
+  });
+}
+
+// Retour arrière du navigateur : on enlève l'effet de sortie
+window.addEventListener("pageshow", function () {
+  document.body.classList.remove("page-sortie");
+});
+
+// ===== APPARITION DES SECTIONS AU SCROLL =====
+const observateur = new IntersectionObserver(function (entrees) {
+  for (const entree of entrees) {
+    if (entree.isIntersecting) {
+      entree.target.classList.add("visible");
+      observateur.unobserve(entree.target);
+    }
+  }
+}, { threshold: 0.15 });
+
+for (const section of document.querySelectorAll("section")) {
+  section.classList.add("apparition");
+  observateur.observe(section);
+}
