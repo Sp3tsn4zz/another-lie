@@ -9,6 +9,10 @@ const visionneuseImage = document.getElementById("visionneuse-image");
 const visionneuseTitre = document.getElementById("visionneuse-titre");
 const visionneuseInfo = document.getElementById("visionneuse-info");
 const visionneuseTexte = document.getElementById("visionneuse-texte");
+const visionneusePiece = document.getElementById("visionneuse-piece");
+const visionneusePng = document.getElementById("visionneuse-png");
+const boutonTelecharger = document.getElementById("visionneuse-telecharger");
+const boutonOuvrirPng = document.getElementById("visionneuse-ouvrir");
 
 const symboles = "!<>-_\\/[]{}=+*^?#░▒▓█⛧01";
 
@@ -120,6 +124,149 @@ function animerNomsCaches(maintenant) {
 
 requestAnimationFrame(animerNomsCaches);
 
+// --- PATCHS EN 3D ---
+// Un patch = une pièce en 3D faite en CSS : la face avant (l'image),
+// la face arrière (le dos en feutre) et des disques empilés entre les deux
+// pour donner de l'épaisseur quand on le voit de profil.
+// Une seule boucle fait tourner tous les patchs de la page.
+
+const pieces = [];                 // tous les patchs 3D affichés
+const VITESSE_NORMALE = 55;        // degrés par seconde au repos
+const VITESSE_SURVOL = 260;        // degrés par seconde quand on survole la carte
+const mouvementReduit = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function creerPiece3D(creation, nbTranches) {
+  const scene = document.createElement("div");
+  scene.className = "piece-scene";
+
+  const halo = document.createElement("div");
+  halo.className = "piece-halo";
+
+  const ombre = document.createElement("div");
+  ombre.className = "piece-ombre";
+
+  const flotte = document.createElement("div");
+  flotte.className = "piece-flotte";
+
+  const piece = document.createElement("div");
+  piece.className = "piece";
+  piece.style.setProperty("--bord", creation.bord || "#1a0000");
+  piece.style.setProperty("--n", nbTranches);
+
+  // L'épaisseur : des disques empilés
+  for (let i = 0; i < nbTranches; i++) {
+    const tranche = document.createElement("div");
+    tranche.className = "piece-tranche";
+    tranche.style.setProperty("--i", i);
+    piece.appendChild(tranche);
+  }
+
+  // Face avant : l'image + un reflet qui glisse quand le patch tourne
+  const avant = document.createElement("div");
+  avant.className = "piece-face piece-avant";
+  const img = document.createElement("img");
+  img.src = creation.image;
+  img.alt = creation.titre;
+  img.draggable = false;
+  const reflet = document.createElement("div");
+  reflet.className = "piece-reflet";
+  avant.appendChild(img);
+  avant.appendChild(reflet);
+
+  // Face arrière : le dos du patch
+  const arriere = document.createElement("div");
+  arriere.className = "piece-face piece-arriere";
+  const dos = document.createElement("img");
+  dos.src = creation.image;
+  dos.alt = "";
+  dos.draggable = false;
+  const sceau = document.createElement("span");
+  sceau.className = "piece-sceau";
+  sceau.textContent = "⛧";
+  arriere.appendChild(dos);
+  arriere.appendChild(sceau);
+
+  piece.appendChild(avant);
+  piece.appendChild(arriere);
+  flotte.appendChild(piece);
+  scene.appendChild(halo);
+  scene.appendChild(ombre);
+  scene.appendChild(flotte);
+
+  const donnees = {
+    scene: scene,
+    piece: piece,
+    ombre: ombre,
+    reflet: reflet,
+    image: img,
+    angle: Math.random() * 360,  // chaque patch démarre à un angle différent
+    vitesse: VITESSE_NORMALE,
+    cible: VITESSE_NORMALE,
+    tenu: false                  // true quand on le fait tourner à la souris
+  };
+  pieces.push(donnees);
+  return donnees;
+}
+
+let derniereImagePieces = performance.now();
+
+function animerPieces(maintenant) {
+  const ecart = Math.min(0.05, (maintenant - derniereImagePieces) / 1000);
+  derniereImagePieces = maintenant;
+
+  for (const p of pieces) {
+    if (!p.tenu) {
+      // La vitesse revient doucement vers la cible (effet d'élan)
+      p.vitesse += (p.cible - p.vitesse) * Math.min(1, ecart * 3);
+      p.angle += p.vitesse * ecart * (mouvementReduit ? 0.3 : 1);
+    }
+    const a = ((p.angle % 360) + 360) % 360;
+    const rad = a * Math.PI / 180;
+    p.piece.style.transform = "rotateY(" + a + "deg)";
+    // L'ombre s'affine quand le patch est de profil
+    p.ombre.style.transform = "translateX(-50%) scaleX(" + (0.35 + 0.65 * Math.abs(Math.cos(rad))) + ")";
+    // Le reflet glisse sur la face avant
+    p.reflet.style.backgroundPosition = (50 + Math.sin(rad) * 70) + "% 0";
+  }
+
+  requestAnimationFrame(animerPieces);
+}
+
+requestAnimationFrame(animerPieces);
+
+// Dans la visionneuse : on peut attraper le patch et le faire tourner
+function rendreTournable(p) {
+  let dernierX = 0;
+  let dernierMoment = 0;
+
+  p.scene.addEventListener("pointerdown", function (e) {
+    p.tenu = true;
+    dernierX = e.clientX;
+    dernierMoment = performance.now();
+    p.scene.setPointerCapture(e.pointerId);
+    p.scene.classList.add("tenu");
+  });
+
+  p.scene.addEventListener("pointermove", function (e) {
+    if (!p.tenu) return;
+    const maintenant = performance.now();
+    const dx = e.clientX - dernierX;
+    p.angle += dx * 0.6;
+    // On garde la vitesse du geste pour le lancer
+    const dt = Math.max(1, maintenant - dernierMoment) / 1000;
+    p.vitesse = Math.max(-1500, Math.min(1500, (dx * 0.6) / dt));
+    dernierX = e.clientX;
+    dernierMoment = maintenant;
+  });
+
+  function lacher() {
+    p.tenu = false;
+    p.scene.classList.remove("tenu");
+  }
+  p.scene.addEventListener("pointerup", lacher);
+  p.scene.addEventListener("pointercancel", lacher);
+}
+
 // --- Création d'une carte ---
 function creerCarte(creation, index) {
   const carte = document.createElement("button");
@@ -127,10 +274,19 @@ function creerCarte(creation, index) {
   carte.type = "button";
   carte.style.animationDelay = index * 0.08 + "s";
 
-  // 3 calques de la même image : normal, rouge, cyan (effet RGB au survol)
   const cadre = document.createElement("div");
   cadre.className = "carte-cadre";
-  const calques = ["", "calque-rouge", "calque-cyan"];
+
+  // Patch : une pièce en 3D qui tourne sur elle-même
+  let piece = null;
+  if (creation.type === "patch") {
+    carte.classList.add("carte-patch");
+    piece = creerPiece3D(creation, 10);
+    cadre.appendChild(piece.scene);
+  }
+
+  // 3 calques de la même image : normal, rouge, cyan (effet RGB au survol)
+  const calques = piece ? [] : ["", "calque-rouge", "calque-cyan"];
   for (const classe of calques) {
     const img = document.createElement("img");
     img.src = creation.image;
@@ -143,7 +299,7 @@ function creerCarte(creation, index) {
   }
 
   // Image introuvable : on affiche "SIGNAL PERDU"
-  cadre.querySelector("img").addEventListener("error", function () {
+  (piece ? piece.image : cadre.querySelector("img")).addEventListener("error", function () {
     carte.classList.add("perdu");
   });
 
@@ -172,6 +328,9 @@ function creerCarte(creation, index) {
 
   // Survol (ou sélection au clavier) : le vrai nom se révèle
   function reveler() {
+    if (piece) {
+      piece.cible = VITESSE_SURVOL;
+    }
     if (nomCache) {
       nomCache.cible = creation.titre.length;
     } else {
@@ -181,6 +340,9 @@ function creerCarte(creation, index) {
 
   // Le curseur part : même effet dans l'autre sens
   function cacher() {
+    if (piece) {
+      piece.cible = VITESSE_NORMALE;
+    }
     if (nomCache) {
       nomCache.cible = 0;
     }
@@ -214,6 +376,8 @@ function creerCarte(creation, index) {
 function afficherGalerie() {
   // On oublie les noms cachés des anciennes cartes avant de les supprimer
   nomsCaches.length = 0;
+  pieces.length = 0;
+  pieceVisionneuse = null;
   grille.innerHTML = "";
   affichees = CREATIONS.filter(function (c) {
     return filtreActif === "tout" || c.type === filtreActif;
@@ -236,9 +400,42 @@ for (const bouton of boutonsFiltre) {
 }
 
 // --- Visionneuse plein écran ---
+let pieceVisionneuse = null;  // le patch 3D affiché en grand
+
+function retirerPieceVisionneuse() {
+  if (pieceVisionneuse) {
+    const position = pieces.indexOf(pieceVisionneuse);
+    if (position !== -1) pieces.splice(position, 1);
+    pieceVisionneuse = null;
+  }
+  visionneusePiece.innerHTML = "";
+}
+
 function montrerCreation() {
   const creation = affichees[indexOuvert];
-  visionneuseImage.src = creation.image;
+  retirerPieceVisionneuse();
+
+  if (creation.type === "patch") {
+    // Patch : grand modèle 3D qu'on peut faire tourner + boutons PNG
+    visionneuseImage.classList.add("cache");
+    visionneuseImage.removeAttribute("src");
+    visionneusePiece.classList.remove("cache");
+    pieceVisionneuse = creerPiece3D(creation, 18);
+    rendreTournable(pieceVisionneuse);
+    visionneusePiece.appendChild(pieceVisionneuse.scene);
+
+    const png = creation.png || creation.image;
+    boutonTelecharger.href = png;
+    boutonTelecharger.download = png.split("/").pop();
+    boutonOuvrirPng.href = png;
+    visionneusePng.classList.remove("cache");
+  } else {
+    visionneuseImage.classList.remove("cache");
+    visionneusePiece.classList.add("cache");
+    visionneusePng.classList.add("cache");
+    visionneuseImage.src = creation.image;
+  }
+
   visionneuseImage.alt = creation.titre;
   visionneuseInfo.textContent = creation.type + " · " + creation.annee;
   visionneuseTexte.textContent = creation.description || "";
@@ -258,6 +455,7 @@ function ouvrirVisionneuse(index) {
 }
 
 function fermerVisionneuse() {
+  retirerPieceVisionneuse();
   visionneuse.classList.add("cache");
   document.body.style.overflow = "";
 }

@@ -314,3 +314,247 @@
   color: #fff;
   text-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
 }
+
+/* ===== PATCHS EN 3D ===== */
+/* La scène : la perspective donne la profondeur */
+.piece-scene {
+  --taille: 72%;          /* taille du patch dans son cadre */
+  --ep: 10px;             /* épaisseur du patch */
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 900px;
+}
+
+/* Cadre de la carte patch : fond sombre avec une lueur rouge au centre */
+.carte-patch .carte-cadre {
+  background:
+    radial-gradient(circle at 50% 48%, rgba(179, 0, 0, 0.28) 0%, rgba(40, 0, 0, 0.25) 38%, #000 70%);
+}
+
+/* Halo rouge qui respire derrière le patch */
+.piece-halo {
+  position: absolute;
+  width: calc(var(--taille) * 1.25);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(179, 0, 0, 0.55) 0%, rgba(179, 0, 0, 0.15) 45%, transparent 70%);
+  filter: blur(6px);
+  animation: halo-respire 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes halo-respire {
+  0%, 100% { opacity: 0.55; transform: scale(0.92); }
+  50%      { opacity: 1;    transform: scale(1.06); }
+}
+
+/* Ombre au sol, elle s'affine quand le patch est de profil (galerie.js) */
+.piece-ombre {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  width: calc(var(--taille) * 0.85);
+  height: 7%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.9) 0%, rgba(90, 0, 0, 0.35) 50%, transparent 72%);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* Le patch flotte doucement de haut en bas */
+.piece-flotte {
+  width: var(--taille);
+  aspect-ratio: 1;
+  transform-style: preserve-3d;
+  animation: piece-flotte 4s ease-in-out infinite;
+}
+
+@keyframes piece-flotte {
+  0%, 100% { transform: translateY(-3%) rotateX(8deg); }
+  50%      { transform: translateY(3%) rotateX(-6deg); }
+}
+
+/* La pièce elle-même (galerie.js change son rotateY à chaque image) */
+.piece {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+/* Tranches : disques empilés qui font l'épaisseur */
+.piece-tranche {
+  position: absolute;
+  inset: 0.6%;
+  border-radius: 50%;
+  background: var(--bord);
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.35);
+  transform: translateZ(calc((var(--i) / (var(--n) - 1) - 0.5) * var(--ep)));
+}
+
+/* Une tranche sur deux plus sombre : effet de couture brodée */
+.piece-tranche:nth-child(odd) {
+  filter: brightness(0.7);
+}
+
+/* Faces avant et arrière */
+.piece-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.piece-avant   { transform: translateZ(calc(var(--ep) / 2 + 0.5px)); }
+.piece-arriere { transform: rotateY(180deg) translateZ(calc(var(--ep) / 2 + 0.5px)); }
+
+/* On annule les styles des images de carte classiques */
+.carte-cadre .piece-face img,
+.piece-face img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: none;
+  filter: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.carte:hover .carte-cadre .piece-face img {
+  transform: none;
+  filter: none;
+}
+
+/* Le dos : feutre sombre, motif à peine visible, pentacle rouge au centre */
+.carte-cadre .piece-arriere img,
+.piece-arriere img {
+  transform: scaleX(-1);
+  filter: grayscale(1) sepia(0.5) hue-rotate(-30deg) brightness(0.3) contrast(1.5) blur(0.5px);
+}
+
+.carte:hover .carte-cadre .piece-arriere img {
+  transform: scaleX(-1);
+  filter: grayscale(1) sepia(0.5) hue-rotate(-30deg) brightness(0.3) contrast(1.5) blur(0.5px);
+}
+
+.piece-sceau {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.6em;
+  color: #b30000;
+  text-shadow: 0 0 10px #b30000, 2px 0 rgba(255, 0, 0, 0.6), -2px 0 rgba(16, 177, 218, 0.4);
+  animation: glitch 2.5s steps(1) infinite;
+}
+
+/* Reflet lumineux qui glisse sur la broderie */
+.piece-reflet {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background: linear-gradient(105deg,
+    transparent 35%,
+    rgba(255, 70, 70, 0.10) 44%,
+    rgba(255, 255, 255, 0.28) 50%,
+    rgba(255, 70, 70, 0.10) 56%,
+    transparent 65%);
+  background-size: 250% 100%;
+}
+
+/* Au survol de la carte : la lueur s'intensifie */
+.carte-patch:hover .piece-halo {
+  animation-duration: 1.2s;
+}
+
+/* ===== PATCH DANS LA VISIONNEUSE ===== */
+#visionneuse-piece {
+  position: relative;
+  width: min(58vh, 82vw);
+  aspect-ratio: 1;
+}
+
+#visionneuse-piece .piece-scene {
+  --taille: 82%;
+  --ep: 22px;
+  cursor: grab;
+  touch-action: none;
+}
+
+#visionneuse-piece .piece-scene.tenu {
+  cursor: grabbing;
+}
+
+#visionneuse-piece .piece-sceau {
+  font-size: 6em;
+}
+
+/* Boutons PNG */
+#visionneuse-png {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 0.6rem;
+}
+
+.bouton-png {
+  position: relative;
+  z-index: 2;
+  font-size: 1.4rem;
+  padding: 0.35rem 1.1rem;
+  background-color: #000;
+  color: #d0d0d0;
+  border: 1px solid #b30000;
+  text-decoration: none;
+  transition: background-color 0.15s, color 0.15s, box-shadow 0.2s;
+}
+
+.bouton-png:hover,
+.bouton-png:focus-visible {
+  background-color: #b30000;
+  color: #000;
+  box-shadow: 0 0 16px rgba(179, 0, 0, 0.7);
+  outline: none;
+}
+
+#visionneuse-telecharger {
+  border-color: #ff2a2a;
+  color: #fff;
+  text-shadow: 0 0 6px #b30000;
+  animation: clignote-doux 2s ease-in-out infinite;
+}
+
+@keyframes clignote-doux {
+  0%, 100% { box-shadow: 0 0 6px rgba(179, 0, 0, 0.4); }
+  50%      { box-shadow: 0 0 18px rgba(255, 0, 0, 0.8); }
+}
+
+@media (max-width: 600px) {
+  #visionneuse-piece {
+    width: min(48vh, 86vw);
+  }
+
+  #visionneuse-piece .piece-scene {
+    --ep: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .piece-halo,
+  .piece-flotte,
+  .piece-sceau,
+  #visionneuse-telecharger {
+    animation: none;
+  }
+}

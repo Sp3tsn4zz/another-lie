@@ -36,6 +36,7 @@
         <button class="filtre" data-filtre="cover">Covers</button>
         <button class="filtre" data-filtre="logo">Logos</button>
         <button class="filtre" data-filtre="artwork">Artworks</button>
+        <button class="filtre" data-filtre="patch">Patchs</button>
       </div>
       <div id="galerie-grille"></div>
     </section>
@@ -52,10 +53,16 @@
     <button id="visionneuse-precedent" class="visionneuse-bouton" aria-label="Précédent">‹</button>
     <figure>
       <img id="visionneuse-image" src="" alt="">
+      <!-- Patch en 3D (rempli par galerie.js quand on ouvre un patch) -->
+      <div id="visionneuse-piece" class="cache"></div>
       <figcaption>
         <h3 id="visionneuse-titre"></h3>
         <p id="visionneuse-info"></p>
         <p id="visionneuse-texte"></p>
+        <div id="visionneuse-png" class="cache">
+          <a id="visionneuse-telecharger" class="bouton-png" href="" download>⤓ Télécharger le PNG</a>
+          <a id="visionneuse-ouvrir" class="bouton-png" href="" target="_blank" rel="noopener">Voir le PNG en grand</a>
+        </div>
       </figcaption>
     </figure>
     <button id="visionneuse-suivant" class="visionneuse-bouton" aria-label="Suivant">›</button>
