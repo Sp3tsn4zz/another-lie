@@ -13,7 +13,7 @@
 const CREATIONS = [
   {
     type: "patch",
-    titre: "Écusson du démon ailé",
+    titre: "Bad Reaper V1",
     annee: "2026",
     image: "img/galerie/patch-ecusson-demon-aile-560.png",
     png: "img/galerie/patch-ecusson-demon-aile.png",
@@ -22,7 +22,7 @@ const CREATIONS = [
   },
   {
     type: "patch",
-    titre: "Emblème démoniaque brodé cyber-gothique",
+    titre: "Bad Reaper V2",
     annee: "2026",
     image: "img/galerie/patch-embleme-cyber-gothique-560.png",
     png: "img/galerie/patch-embleme-cyber-gothique.png",

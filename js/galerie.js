@@ -18,7 +18,7 @@ const symboles = "!<>-_\\/[]{}=+*^?#░▒▓█⛧01";
 
 // Types dont le nom est caché par des symboles tant qu'on ne survole pas la carte
 // (ajoute "cover" ou "artwork" ici pour faire pareil sur les autres)
-const TYPES_CACHES = ["logo"];
+const TYPES_CACHES = ["logo", "patch"];
 
 let filtreActif = "tout";
 let affichees = [];   // créations visibles avec le filtre actuel
@@ -131,8 +131,8 @@ requestAnimationFrame(animerNomsCaches);
 // Une seule boucle fait tourner tous les patchs de la page.
 
 const pieces = [];                 // tous les patchs 3D affichés
-const VITESSE_NORMALE = 55;        // degrés par seconde au repos
-const VITESSE_SURVOL = 260;        // degrés par seconde quand on survole la carte
+const VITESSE_NORMALE = 22;        // degrés par seconde au repos
+const VITESSE_SURVOL = 70;        // degrés par seconde quand on survole la carte
 const mouvementReduit = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function creerPiece3D(creation, nbTranches) {
