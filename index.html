@@ -6,6 +6,7 @@
   <title>another-lie</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/accueil.css">
 </head>
 <body>
 
@@ -55,8 +56,177 @@
     </nav>
   </header>
 
-  <main>
+  <main class="ac-main">
+
+    <div class="ac-curseur-point" aria-hidden="true">⛧</div>
+    <div class="ac-curseur-anneau" aria-hidden="true"></div>
+    <div class="ac-grain" aria-hidden="true"></div>
+
+    <!-- HERO -->
+    <section class="ac-hero">
+      <div class="ac-signal">&gt; SYSTÈME CHARGÉ · BIENVENUE, VOYAGEUR</div>
+
+      <div class="ac-emblem-zone">
+        <div class="ac-emblem-halo"></div>
+        <div class="ac-emblem-anneau"></div>
+        <div class="ac-emblem-cercle">⛧</div>
+
+        <div class="ac-runes-cachees" aria-hidden="true">
+          <span style="transform: translate(-50%,-50%) rotate(0deg) translateY(-152px);">⛧</span>
+          <span style="transform: translate(-50%,-50%) rotate(45deg) translateY(-152px);">⛧</span>
+          <span style="transform: translate(-50%,-50%) rotate(90deg) translateY(-152px);">⛧</span>
+          <span style="transform: translate(-50%,-50%) rotate(135deg) translateY(-152px);">⛧</span>
+          <span style="transform: translate(-50%,-50%) rotate(180deg) translateY(-152px);">⛧</span>
+          <span style="transform: translate(-50%,-50%) rotate(225deg) translateY(-152px);">⛧</span>
+          <span style="transform: translate(-50%,-50%) rotate(270deg) translateY(-152px);">⛧</span>
+          <span style="transform: translate(-50%,-50%) rotate(315deg) translateY(-152px);">⛧</span>
+        </div>
+        <div class="ac-runes-label" aria-hidden="true">RUNES SCELLÉES — APPROCHEZ L'EMBLÈME</div>
+      </div>
+
+      <div class="ac-hero-texte">Logo 3D animé ici — il penche vers votre curseur, comme l'emblème ci-dessus.</div>
+    </section>
+
+    <!-- PORTAIL — en prod : le scroll fait plonger la caméra en Z -->
+    <section class="ac-portail">
+      <div class="ac-portail-anneaux">
+        <div class="ac-anneau ac-anneau-1"></div>
+        <div class="ac-anneau ac-anneau-2"></div>
+        <div class="ac-anneau ac-anneau-3"></div>
+        <div class="ac-anneau-coeur"></div>
+      </div>
+      <div class="ac-portail-legende">↓ EN PRODUCTION : LA CAMÉRA PLONGE DANS CE PORTAIL AU SCROLL — PROFONDEUR Z ↓</div>
+    </section>
+
+    <!-- BUREAU : navigation visuelle façon dossiers OS -->
+    <section class="ac-bureau">
+      <h2 class="ac-bureau-titre">⟵ LE BUREAU DE L'ABYSSE ⟶</h2>
+      <div class="ac-bureau-sous-titre">GLISSEZ · SURVOLEZ POUR SÉLECTIONNER · UN DOSSIER CACHE UN SECRET</div>
+      <div class="ac-corridor">
+
+        <a href="musique.html" class="ac-altar portail">
+          <span class="ac-dossier-cadre"></span>
+          <span class="ac-secret-point"></span>
+          <span class="ac-secret-label">SECRET</span>
+          <span class="ac-dossier-icone"><span></span><span></span></span>
+          <span class="ac-altar-glyphe">⛧</span>
+          <span class="ac-altar-label">MUSIQUE</span>
+        </a>
+
+        <a href="galerie.html" class="ac-altar portail">
+          <span class="ac-dossier-cadre"></span>
+          <span class="ac-secret-point"></span>
+          <span class="ac-secret-label">SECRET</span>
+          <span class="ac-dossier-icone"><span></span><span></span></span>
+          <span class="ac-altar-glyphe">⛧</span>
+          <span class="ac-altar-label">GALERIE</span>
+        </a>
+
+        <a href="videos.html" class="ac-altar portail">
+          <span class="ac-dossier-cadre"></span>
+          <span class="ac-secret-point"></span>
+          <span class="ac-secret-label">SECRET</span>
+          <span class="ac-dossier-icone"><span></span><span></span></span>
+          <span class="ac-altar-glyphe">⛧</span>
+          <span class="ac-altar-label">VIDÉOS</span>
+        </a>
+
+        <a href="modeles-3d.html" class="ac-altar portail">
+          <span class="ac-dossier-cadre"></span>
+          <span class="ac-secret-point"></span>
+          <span class="ac-secret-label">SECRET</span>
+          <span class="ac-dossier-icone"><span></span><span></span></span>
+          <span class="ac-altar-glyphe">⛧</span>
+          <span class="ac-altar-label">3D</span>
+        </a>
+
+        <a href="lore.html" class="ac-altar portail">
+          <span class="ac-dossier-cadre"></span>
+          <span class="ac-secret-point"></span>
+          <span class="ac-secret-label">SECRET</span>
+          <span class="ac-dossier-icone"><span></span><span></span></span>
+          <span class="ac-altar-glyphe">⛧</span>
+          <span class="ac-altar-label">LORE</span>
+        </a>
+
+        <a href="contact.html" class="ac-altar portail">
+          <span class="ac-dossier-cadre"></span>
+          <span class="ac-secret-point"></span>
+          <span class="ac-secret-label">SECRET</span>
+          <span class="ac-dossier-icone"><span></span><span></span></span>
+          <span class="ac-altar-glyphe">⛧</span>
+          <span class="ac-altar-label">CONTACT</span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- DERNIÈRE SORTIE -->
+    <section class="ac-sortie">
+      <h2 class="ac-sortie-titre">&gt; DERNIÈRE SORTIE</h2>
+      <div class="ac-sortie-cartes">
+        <a href="musique.html" class="ac-carte-sortie ac-carte-sortie-rouge portail">
+          <img src="img/Faucheur occulte aux pistolets démoniaques.png" alt="Spetsnaz">
+          <span class="ac-coin ac-coin-haut-gauche"></span>
+          <span class="ac-coin ac-coin-haut-droit"></span>
+          <span class="ac-carte-sortie-info">
+            <span class="ac-carte-sortie-nom">SPETSNAZ</span>
+            <span class="ac-carte-sortie-desc">Nouveau beat · Cybersigilkore</span>
+          </span>
+        </a>
+        <a href="musique.html" class="ac-carte-sortie ac-carte-sortie-cyan portail">
+          <img src="img/Puppet Master v1.png" alt="vvh0sn3xt">
+          <span class="ac-coin ac-coin-haut-gauche"></span>
+          <span class="ac-coin ac-coin-haut-droit"></span>
+          <span class="ac-carte-sortie-info">
+            <span class="ac-carte-sortie-nom">VVH0SN3XT</span>
+            <span class="ac-carte-sortie-desc">Dernier clip · Univers Puppet Master</span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <!-- LORE -->
+    <section class="ac-lore">
+      <div class="ac-lore-cadre">
+        <h2 class="ac-lore-etiquette">LORE</h2>
+        <blockquote class="ac-lore-citation">« Avant le signal, avant la ville, il n'y avait que l'abysse — et l'abysse pleurait déjà notre nom. »</blockquote>
+        <a href="lore.html" class="ac-lore-lien portail">CONTINUER LA LECTURE →</a>
+      </div>
+    </section>
+
+    <!-- RITUEL CACHÉ -->
+    <section class="ac-rituel">
+      <div class="ac-rituel-cadre">
+        <div class="ac-rituel-icone" aria-hidden="true">⚿</div>
+        <div class="ac-rituel-texte">
+          <h2 class="ac-rituel-titre">RITUEL CACHÉ</h2>
+          <div class="ac-rituel-desc">Une séquence est dissimulée sur ce site. Chaque âme qui la trouve fait grimper le compteur ci-dessous.</div>
+        </div>
+        <div class="ac-rituel-compteur">RITUELS<br>ACCOMPLIS : ???</div>
+      </div>
+    </section>
+
+    <div class="ac-braise ac-braise-1" aria-hidden="true"></div>
+    <div class="ac-braise ac-braise-2" aria-hidden="true"></div>
+    <div class="ac-braise ac-braise-3" aria-hidden="true"></div>
+    <div class="ac-braise ac-braise-4" aria-hidden="true"></div>
+    <div class="ac-braise ac-braise-5" aria-hidden="true"></div>
+    <div class="ac-braise ac-braise-6" aria-hidden="true"></div>
+
   </main>
+
+  <footer class="ac-pied">
+    <div class="ac-pied-ames">
+      <span>ÂMES PASSÉES :</span>
+      <span class="ac-pied-compteur">006661</span>
+    </div>
+    <div class="ac-pied-socials">
+      <a href="https://soundcloud.com/user-00077777" target="_blank" rel="noopener">SOUNDCLOUD</a>
+      <a href="https://www.youtube.com/@vvh0sn3xt/videos" target="_blank" rel="noopener">YOUTUBE</a>
+      <a href="musique.html" class="portail">SPOTIFY</a>
+    </div>
+  </footer>
 
   <iframe src="logo-3d-vvh0sn3xt.html"
     style="position:fixed; bottom:0px; right:-30px; width:280px; aspect-ratio:1048/620; border:none; pointer-events:none; z-index:50;"
@@ -64,5 +234,6 @@
   </iframe>
 
   <script src="js/script.js"></script>
+  <script src="js/accueil.js"></script>
 </body>
 </html>
