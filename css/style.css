@@ -463,13 +463,13 @@ p  {
 /* ===== CHOIX MUSIQUE : spetsnaz (gauche) / vvh0sn3xt (droite) ===== */
 .choix-musique {
   display: flex;
-  flex-wrap: wrap;
   gap: 2px;
   margin-bottom: 2rem;
 }
 
 .carte-musique {
-  flex: 1 1 240px;
+  flex: 1 1 0;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   background-color: #000;
@@ -484,8 +484,8 @@ p  {
 
 .carte-musique img {
   width: 100%;
-  height: 320px;
-  object-fit: contain;
+  height: 160px;
+  object-fit: cover;
   display: block;
   filter: brightness(0.8);
   transition: filter 0.3s ease, transform 0.3s ease;
@@ -524,37 +524,55 @@ p  {
   color: #000;
 }
 
-/* Spetsnaz : pulsation rapide et saccadée (tension, combat) */
+/* Spetsnaz : glitch complexe teinté rouge */
 .carte-spetsnaz:hover img {
-  filter: brightness(1.1) drop-shadow(0 0 25px #b30000);
-  animation: spetsnaz-tremble 0.3s infinite;
+  animation: glitch-image-rouge 0.8s steps(1) infinite;
 }
 
-@keyframes spetsnaz-tremble {
-  0%   { transform: translate(0, 0); }
-  25%  { transform: translate(-2px, 1px); }
-  50%  { transform: translate(2px, -1px); }
-  75%  { transform: translate(-1px, -1px); }
-  100% { transform: translate(0, 0); }
+@keyframes glitch-image-rouge {
+  0%   { clip-path: inset(0 0 0 0);       transform: translate(0, 0);              filter: brightness(1.1) drop-shadow(0 0 20px #b30000); }
+  8%   { clip-path: inset(10% 0 60% 0);   transform: translate(-6px, 2px) skewX(4deg);  filter: hue-rotate(90deg) brightness(1.3); }
+  16%  { clip-path: inset(50% 0 10% 0);   transform: translate(5px, -3px);         filter: invert(1); }
+  24%  { clip-path: inset(0 0 0 0);       transform: translate(0, 0);              filter: brightness(1.1) drop-shadow(0 0 20px #b30000); }
+  32%  { clip-path: inset(70% 0 5% 0);    transform: translate(-4px, 4px) skewX(-6deg); filter: hue-rotate(180deg); }
+  40%  { clip-path: inset(20% 0 40% 0);   transform: translate(6px, -2px);         filter: brightness(1.5) drop-shadow(0 0 25px #b30000); }
+  48%  { clip-path: inset(0 0 0 0);       transform: translate(0, 0);              filter: brightness(1.1) drop-shadow(0 0 20px #b30000); }
+  60%  { clip-path: inset(35% 0 30% 0);   transform: translate(-3px, -5px) skewX(3deg); filter: invert(1) hue-rotate(45deg); }
+  70%  { clip-path: inset(0 0 0 0);       transform: translate(0, 0);              filter: brightness(1.1) drop-shadow(0 0 20px #b30000); }
+  80%  { clip-path: inset(55% 0 15% 0);   transform: translate(5px, 3px);          filter: contrast(1.6) drop-shadow(0 0 25px #b30000); }
+  100% { clip-path: inset(0 0 0 0);       transform: translate(0, 0);              filter: brightness(1.1) drop-shadow(0 0 20px #b30000); }
 }
 
-/* vvh0sn3xt : respiration lente et hypnotique (contrôle, manipulation) */
+/* vvh0sn3xt : glitch complexe teinté cyan */
 .carte-vvh0sn3xt:hover img {
-  filter: brightness(1.1) drop-shadow(0 0 25px #5dccee);
-  animation: vvh0sn3xt-respire 2.5s ease-in-out infinite;
+  animation: glitch-image-cyan 0.8s steps(1) infinite;
 }
 
-@keyframes vvh0sn3xt-respire {
-  0%, 100% { transform: scale(1); }
-  50%      { transform: scale(1.03); }
+@keyframes glitch-image-cyan {
+  0%   { clip-path: inset(0 0 0 0);       transform: translate(0, 0);              filter: brightness(1.1) drop-shadow(0 0 20px #5dccee); }
+  8%   { clip-path: inset(15% 0 55% 0);   transform: translate(6px, -2px) skewX(-4deg); filter: hue-rotate(-90deg) brightness(1.3); }
+  16%  { clip-path: inset(45% 0 15% 0);   transform: translate(-5px, 3px);         filter: invert(1); }
+  24%  { clip-path: inset(0 0 0 0);       transform: translate(0, 0);              filter: brightness(1.1) drop-shadow(0 0 20px #5dccee); }
+  32%  { clip-path: inset(65% 0 10% 0);   transform: translate(4px, -4px) skewX(6deg);  filter: hue-rotate(-180deg); }
+  40%  { clip-path: inset(25% 0 35% 0);   transform: translate(-6px, 2px);         filter: brightness(1.5) drop-shadow(0 0 25px #5dccee); }
+  48%  { clip-path: inset(0 0 0 0);       transform: translate(0, 0);              filter: brightness(1.1) drop-shadow(0 0 20px #5dccee); }
+  60%  { clip-path: inset(30% 0 35% 0);   transform: translate(3px, 5px) skewX(-3deg);  filter: invert(1) hue-rotate(-45deg); }
+  70%  { clip-path: inset(0 0 0 0);       transform: translate(0, 0);              filter: brightness(1.1) drop-shadow(0 0 20px #5dccee); }
+  80%  { clip-path: inset(50% 0 20% 0);   transform: translate(-5px, -3px);        filter: contrast(1.6) drop-shadow(0 0 25px #5dccee); }
+  100% { clip-path: inset(0 0 0 0);       transform: translate(0, 0);              filter: brightness(1.1) drop-shadow(0 0 20px #5dccee); }
 }
 
 @media (max-width: 600px) {
-  .choix-musique {
-    flex-direction: column;
+  .carte-musique img {
+    height: 100px;
   }
 
-  .carte-musique img {
-    height: 240px;
+  .etiquette-carte {
+    font-size: 1.1rem;
+  }
+
+  .bouton-streaming {
+    font-size: 1rem;
+    padding: 0.4rem;
   }
 }
