@@ -284,6 +284,16 @@ p  {
   border: 1px solid #b30000;
 }
 
+/* Empêche le navigateur de peindre les champs pré-remplis en blanc/bleu */
+#porte input:-webkit-autofill,
+#porte input:-webkit-autofill:hover,
+#porte input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #000 inset;
+  -webkit-text-fill-color: #d0d0d0;
+  caret-color: #d0d0d0;
+  transition: background-color 9999s ease-out 0s;
+}
+
 #porte button:hover {
   background-color: #b30000;
   color: #000;
@@ -448,4 +458,103 @@ p  {
   position: absolute;
   pointer-events: none;
   mix-blend-mode: difference;
+}
+
+/* ===== CHOIX MUSIQUE : spetsnaz (gauche) / vvh0sn3xt (droite) ===== */
+.choix-musique {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-bottom: 2rem;
+}
+
+.carte-musique {
+  flex: 1 1 240px;
+  display: flex;
+  flex-direction: column;
+  background-color: #000;
+  border: 1px solid #b30000;
+}
+
+.image-carte {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.carte-musique img {
+  width: 100%;
+  height: 320px;
+  object-fit: contain;
+  display: block;
+  filter: brightness(0.8);
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.etiquette-carte {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.6rem;
+  letter-spacing: 0.2rem;
+  color: #d0d0d0;
+  text-shadow: 0 0 8px #b30000;
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
+}
+
+.image-carte:hover .etiquette-carte {
+  opacity: 1;
+}
+
+.bouton-streaming {
+  display: block;
+  text-align: center;
+  padding: 0.6rem;
+  font-size: 1.2rem;
+  letter-spacing: 0.1rem;
+  color: #d0d0d0;
+  border-top: 1px solid #b30000;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.bouton-streaming:hover {
+  background-color: #b30000;
+  color: #000;
+}
+
+/* Spetsnaz : pulsation rapide et saccadée (tension, combat) */
+.carte-spetsnaz:hover img {
+  filter: brightness(1.1) drop-shadow(0 0 25px #b30000);
+  animation: spetsnaz-tremble 0.3s infinite;
+}
+
+@keyframes spetsnaz-tremble {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-2px, 1px); }
+  50%  { transform: translate(2px, -1px); }
+  75%  { transform: translate(-1px, -1px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* vvh0sn3xt : respiration lente et hypnotique (contrôle, manipulation) */
+.carte-vvh0sn3xt:hover img {
+  filter: brightness(1.1) drop-shadow(0 0 25px #5dccee);
+  animation: vvh0sn3xt-respire 2.5s ease-in-out infinite;
+}
+
+@keyframes vvh0sn3xt-respire {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.03); }
+}
+
+@media (max-width: 600px) {
+  .choix-musique {
+    flex-direction: column;
+  }
+
+  .carte-musique img {
+    height: 240px;
+  }
 }
