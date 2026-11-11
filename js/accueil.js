@@ -44,3 +44,28 @@
     }
   });
 })();
+
+// ===== PENTACLE-NAV : survol sur ordinateur, tap sur tactile =====
+(function () {
+  const zone = document.getElementById("ac-emblem-zone");
+  const bouton = document.getElementById("ac-emblem-bouton");
+  if (!zone || !bouton) return;
+
+  const sansHover = window.matchMedia("(hover: none)").matches;
+  if (!sansHover) return; // le survol CSS suffit sur ordinateur
+
+  function fermer(e) {
+    if (!zone.contains(e.target)) {
+      zone.classList.remove("actif");
+      document.removeEventListener("click", fermer);
+    }
+  }
+
+  bouton.addEventListener("click", function (e) {
+    e.preventDefault();
+    const ouvert = zone.classList.toggle("actif");
+    if (ouvert) {
+      document.addEventListener("click", fermer);
+    }
+  });
+})();

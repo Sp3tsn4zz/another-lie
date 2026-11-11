@@ -171,6 +171,111 @@
   color: #9a9492;
 }
 
+/* ===== PENTACLE-NAV : rubriques aux 5 pointes de l'emblème ===== */
+.ac-emblem-cercle {
+  cursor: pointer;
+}
+
+.ac-pentacle-nav {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ac-pentacle-lien {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) scale(0.35);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+}
+
+.ac-pentacle-pt-0 { --dx: 0px;    --dy: -190px; transition-delay: 0s; }
+.ac-pentacle-pt-1 { --dx: 181px;  --dy: -59px;  transition-delay: 0.04s; }
+.ac-pentacle-pt-2 { --dx: 112px;  --dy: 154px;  transition-delay: 0.08s; }
+.ac-pentacle-pt-3 { --dx: -112px; --dy: 154px;  transition-delay: 0.12s; }
+.ac-pentacle-pt-4 { --dx: -181px; --dy: -59px;  transition-delay: 0.16s; }
+
+.ac-emblem-zone:hover .ac-pentacle-lien,
+.ac-emblem-zone:focus-within .ac-pentacle-lien,
+.ac-emblem-zone.actif .ac-pentacle-lien {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) scale(1);
+}
+
+.ac-pentacle-glyphe {
+  font-size: 20px;
+  color: #b05454;
+  text-shadow: 0 0 8px rgba(176,84,84,0.5);
+  transition: color 0.25s ease, text-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.ac-pentacle-texte {
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  color: #d8d2d0;
+}
+
+.ac-pentacle-lien:hover .ac-pentacle-glyphe,
+.ac-pentacle-principal:hover .ac-pentacle-glyphe {
+  color: #ff3b3b;
+  text-shadow: 0 0 16px rgba(255,59,59,0.85);
+  transform: scale(1.18);
+}
+
+.ac-pentacle-lien:hover .ac-pentacle-texte,
+.ac-pentacle-principal:hover .ac-pentacle-texte {
+  color: #ff3b3b;
+}
+
+.ac-pentacle-groupe {
+  gap: 4px;
+}
+
+.ac-pentacle-principal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-decoration: none;
+}
+
+.ac-pentacle-sous-liens {
+  display: flex;
+  gap: 8px;
+}
+
+.ac-pentacle-sous-liens a {
+  font-size: 0.55rem;
+  letter-spacing: 1px;
+  color: #847e7c;
+  text-decoration: none;
+}
+
+.ac-pentacle-sous-liens a:hover {
+  color: #5dccee;
+}
+
+@media (max-width: 700px) {
+  .ac-pentacle-pt-0 { --dy: -145px; }
+  .ac-pentacle-pt-1 { --dx: 138px; --dy: -45px; }
+  .ac-pentacle-pt-2 { --dx: 85px;  --dy: 117px; }
+  .ac-pentacle-pt-3 { --dx: -85px; --dy: 117px; }
+  .ac-pentacle-pt-4 { --dx: -138px; --dy: -45px; }
+  .ac-pentacle-glyphe { font-size: 16px; }
+  .ac-pentacle-texte { font-size: 0.55rem; }
+}
+
 /* PORTAIL */
 .ac-portail {
   display: flex;

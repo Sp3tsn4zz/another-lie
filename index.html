@@ -66,10 +66,10 @@
     <section class="ac-hero">
       <div class="ac-signal">&gt; SYSTÈME CHARGÉ · BIENVENUE, VOYAGEUR</div>
 
-      <div class="ac-emblem-zone">
+      <div class="ac-emblem-zone" id="ac-emblem-zone">
         <div class="ac-emblem-halo"></div>
         <div class="ac-emblem-anneau"></div>
-        <div class="ac-emblem-cercle">⛧</div>
+        <div class="ac-emblem-cercle" id="ac-emblem-bouton" tabindex="0" role="button" aria-label="Ouvrir le menu des rubriques">⛧</div>
 
         <div class="ac-runes-cachees" aria-hidden="true">
           <span style="transform: translate(-50%,-50%) rotate(0deg) translateY(-152px);">⛧</span>
@@ -82,12 +82,46 @@
           <span style="transform: translate(-50%,-50%) rotate(315deg) translateY(-152px);">⛧</span>
         </div>
         <div class="ac-runes-label" aria-hidden="true">RUNES SCELLÉES — APPROCHEZ L'EMBLÈME</div>
+
+        <!-- RUBRIQUES DISPOSÉES AUX 5 POINTES DU PENTACLE -->
+        <nav class="ac-pentacle-nav" aria-label="Rubriques du site">
+          <a href="index.html" class="ac-pentacle-lien ac-pentacle-pt-0">
+            <span class="ac-pentacle-glyphe">⛧</span>
+            <span class="ac-pentacle-texte">ACCUEIL</span>
+          </a>
+          <a href="musique.html" class="ac-pentacle-lien ac-pentacle-pt-1 portail">
+            <span class="ac-pentacle-glyphe">⛧</span>
+            <span class="ac-pentacle-texte">MUSIQUE</span>
+          </a>
+          <div class="ac-pentacle-lien ac-pentacle-groupe ac-pentacle-pt-2">
+            <a href="galerie.html" class="ac-pentacle-principal portail">
+              <span class="ac-pentacle-glyphe">⛧</span>
+              <span class="ac-pentacle-texte">GALERIE</span>
+            </a>
+            <div class="ac-pentacle-sous-liens">
+              <a href="videos.html" class="portail">Vidéos</a>
+              <a href="modeles-3d.html" class="portail">3D</a>
+            </div>
+          </div>
+          <a href="lore.html" class="ac-pentacle-lien ac-pentacle-pt-3 portail">
+            <span class="ac-pentacle-glyphe">⛧</span>
+            <span class="ac-pentacle-texte">LORE</span>
+          </a>
+          <a href="contact.html" class="ac-pentacle-lien ac-pentacle-pt-4 portail">
+            <span class="ac-pentacle-glyphe">⛧</span>
+            <span class="ac-pentacle-texte">CONTACT</span>
+          </a>
+        </nav>
       </div>
 
-      <div class="ac-hero-texte">Logo 3D animé ici — il penche vers votre curseur, comme l'emblème ci-dessus.</div>
+      <div class="ac-hero-texte">Survolez (ou touchez) l'emblème pour faire apparaître les rubriques à ses 5 pointes.</div>
     </section>
 
-    <!-- PORTAIL — en prod : le scroll fait plonger la caméra en Z -->
+    <!--
+    ===== EN RÉSERVE POUR PLUS TARD (Portail, Bureau, Dernière sortie, Lore, Rituel) =====
+    Mis de côté le temps de travailler la page d'accueil simplifiée autour de
+    l'emblème central. Il suffit de retirer ce commentaire pour les remettre.
+
     <section class="ac-portail">
       <div class="ac-portail-anneaux">
         <div class="ac-anneau ac-anneau-1"></div>
@@ -95,12 +129,11 @@
         <div class="ac-anneau ac-anneau-3"></div>
         <div class="ac-anneau-coeur"></div>
       </div>
-      <div class="ac-portail-legende">↓ EN PRODUCTION : LA CAMÉRA PLONGE DANS CE PORTAIL AU SCROLL — PROFONDEUR Z ↓</div>
+      <div class="ac-portail-legende">EN PRODUCTION : LA CAMÉRA PLONGE DANS CE PORTAIL AU SCROLL — PROFONDEUR Z</div>
     </section>
 
-    <!-- BUREAU : navigation visuelle façon dossiers OS -->
     <section class="ac-bureau">
-      <h2 class="ac-bureau-titre">⟵ LE BUREAU DE L'ABYSSE ⟶</h2>
+      <h2 class="ac-bureau-titre">LE BUREAU DE L'ABYSSE</h2>
       <div class="ac-bureau-sous-titre">GLISSEZ · SURVOLEZ POUR SÉLECTIONNER · UN DOSSIER CACHE UN SECRET</div>
       <div class="ac-corridor">
 
@@ -161,9 +194,8 @@
       </div>
     </section>
 
-    <!-- DERNIÈRE SORTIE -->
     <section class="ac-sortie">
-      <h2 class="ac-sortie-titre">&gt; DERNIÈRE SORTIE</h2>
+      <h2 class="ac-sortie-titre">DERNIÈRE SORTIE</h2>
       <div class="ac-sortie-cartes">
         <a href="musique.html" class="ac-carte-sortie ac-carte-sortie-rouge portail">
           <img src="img/Faucheur occulte aux pistolets démoniaques.png" alt="Spetsnaz">
@@ -186,16 +218,14 @@
       </div>
     </section>
 
-    <!-- LORE -->
     <section class="ac-lore">
       <div class="ac-lore-cadre">
         <h2 class="ac-lore-etiquette">LORE</h2>
         <blockquote class="ac-lore-citation">« Avant le signal, avant la ville, il n'y avait que l'abysse — et l'abysse pleurait déjà notre nom. »</blockquote>
-        <a href="lore.html" class="ac-lore-lien portail">CONTINUER LA LECTURE →</a>
+        <a href="lore.html" class="ac-lore-lien portail">CONTINUER LA LECTURE</a>
       </div>
     </section>
 
-    <!-- RITUEL CACHÉ -->
     <section class="ac-rituel">
       <div class="ac-rituel-cadre">
         <div class="ac-rituel-icone" aria-hidden="true">⚿</div>
@@ -203,9 +233,12 @@
           <h2 class="ac-rituel-titre">RITUEL CACHÉ</h2>
           <div class="ac-rituel-desc">Une séquence est dissimulée sur ce site. Chaque âme qui la trouve fait grimper le compteur ci-dessous.</div>
         </div>
-        <div class="ac-rituel-compteur">RITUELS<br>ACCOMPLIS : ???</div>
+        <div class="ac-rituel-compteur">RITUELS ACCOMPLIS : ???</div>
       </div>
     </section>
+
+    ===== FIN DE LA RÉSERVE =====
+    -->
 
     <div class="ac-braise ac-braise-1" aria-hidden="true"></div>
     <div class="ac-braise ac-braise-2" aria-hidden="true"></div>
