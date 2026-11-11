@@ -216,3 +216,64 @@ for (const section of document.querySelectorAll("section")) {
   section.classList.add("apparition");
   observateur.observe(section);
 }
+
+// ===== PLUIE DE SIGILS : fond animé du site (remplace la vidéo) =====
+(function () {
+  const reduitMouvement = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduitMouvement) return;
+
+  const canvas = document.createElement("canvas");
+  canvas.id = "pluie-sigils";
+  canvas.setAttribute("aria-hidden", "true");
+  document.body.prepend(canvas);
+
+  const ctx = canvas.getContext("2d");
+  const GLYPHES = "⛧☠†‡Ψ⟁⚶⚝✦✧☾Ѫ҂֍⚷Ж".split("");
+  const TAILLE_POLICE = 22;
+  const VITESSE = 2;
+
+  let largeur, hauteur, colonnes, gouttes;
+
+  function redimensionner() {
+    largeur = canvas.width = window.innerWidth;
+    hauteur = canvas.height = window.innerHeight;
+    const nbColonnes = Math.ceil(largeur / TAILLE_POLICE);
+    gouttes = new Array(nbColonnes).fill(0).map(function () {
+      return {
+        y: Math.random() * -100,
+        vit: 0.4 + Math.random() * 0.9
+      };
+    });
+    colonnes = nbColonnes;
+  }
+
+  function dessiner() {
+    ctx.fillStyle = "rgba(5,3,4,0.14)";
+    ctx.fillRect(0, 0, largeur, hauteur);
+    ctx.font = TAILLE_POLICE + "px serif";
+    ctx.textAlign = "center";
+
+    for (let i = 0; i < colonnes; i++) {
+      const g = gouttes[i];
+      const x = i * TAILLE_POLICE + TAILLE_POLICE / 2;
+      const y = g.y * TAILLE_POLICE;
+
+      ctx.fillStyle = "rgba(255,170,170,0.9)";
+      ctx.fillText(GLYPHES[Math.floor(Math.random() * GLYPHES.length)], x, y);
+      ctx.fillStyle = "rgba(179,0,0,0.75)";
+      ctx.fillText(GLYPHES[Math.floor(Math.random() * GLYPHES.length)], x, y - TAILLE_POLICE);
+
+      g.y += g.vit * (VITESSE / 4);
+      if (y > hauteur && Math.random() > 0.975) {
+        g.y = Math.random() * -40;
+        g.vit = 0.4 + Math.random() * 0.9;
+      }
+    }
+
+    requestAnimationFrame(dessiner);
+  }
+
+  window.addEventListener("resize", redimensionner);
+  redimensionner();
+  requestAnimationFrame(dessiner);
+})();
